@@ -1,5 +1,5 @@
 # 聊天等級機器人
-若要修改程式,  請註明來源 https://github.com/HansHans135/sign/
+若要修改程式,  請註明來源 https://github.com/HansHans135//
 ---
 歡迎加入 https://hbot.fun  </br></br></br>
 
