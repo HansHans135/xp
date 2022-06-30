@@ -22,7 +22,7 @@ TOKEN = data["token"]
 V_NOW = "1.0"
 
 
-r=requests.get('https://raw.githubusercontent.com/HansHans135/sign/main/now.json')
+r=requests.get('https://raw.githubusercontent.com/HansHans135/xp/main/now.json')
 V_GET = r.json()
 V_NEW = V_GET["v"]
 
@@ -41,7 +41,7 @@ async def on_ready():
             if a == "y" or a == "n":
                 if a == "y":
                     print("下載中...")
-                    url = "https://raw.githubusercontent.com/HansHans135/sign/main/bot.py"
+                    url = "https://raw.githubusercontent.com/HansHans135/xp/main/bot.py"
                     myfile = requests.get(url)
                     open('bot.py', 'wb').write(myfile.content)
                     print(f"下載完成!!重啟`bot.py`即可生效")
