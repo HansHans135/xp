@@ -19,7 +19,7 @@ with open ("config.json",mode="r",encoding="utf-8") as filt:
 PREFIX = data["prefix"]
 op_id = data["owner_id"]
 TOKEN = data["token"]
-V_NOW = "1.0"
+V_NOW = "1.2"
 
 
 r=requests.get('https://raw.githubusercontent.com/HansHans135/xp/main/now.json')
@@ -174,37 +174,39 @@ async def on_message(message):
     if message.author.bot:
         return
     else:
-        with open (f"data/{message.guild.id}/config.json",mode="r",encoding="utf-8") as filt:
-            data = json.load(filt)
-            up_msg = data["msg"]
-            up_cl = data["cl"]
-        if data["open"] == "1":
-            filepath = f"data/{message.guild.id}/{message.author.id}.json"
-            if os.path.isfile(filepath):
-                with open (f"data/{message.guild.id}/{message.author.id}.json",mode="r",encoding="utf-8") as filt:
-                    data = json.load(filt)
-                next_msg = int(data["msg"]) + 1
-                IF_msg = int(next_msg) / int(up_msg)
-                if int(IF_msg) > int(data["now"]):
-                    up = int(data["now"]) + 1
-                    data["msg"] = next_msg
-                    data["now"] = int(data["now"]) + 1
-                    with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
-                        data = json.dump(data,filt)
-                    if up_cl == 0:
-                        await message.channel.send(f"{message.author.mention}恭喜你升級到`{up}`等")
-                    else:
-                        channel = client.get_channel(int(up_cl))
-                        await channel.send(f"{message.author.mention} 恭喜你升級到`{up}`等")
-                else:
+        filepath = f"data/{message.guild.id}/config.json"
+        if os.path.isfile(filepath):
+            with open (f"data/{message.guild.id}/config.json",mode="r",encoding="utf-8") as filt:
+                data = json.load(filt)
+                up_msg = data["msg"]
+                up_cl = data["cl"]
+            if data["open"] == "1":
+                filepath = f"data/{message.guild.id}/{message.author.id}.json"
+                if os.path.isfile(filepath):
+                    with open (f"data/{message.guild.id}/{message.author.id}.json",mode="r",encoding="utf-8") as filt:
+                        data = json.load(filt)
                     next_msg = int(data["msg"]) + 1
-                    data["msg"] = next_msg
+                    IF_msg = int(next_msg) // int(up_msg)
+                    if int(IF_msg) > int(data["now"]):
+                        up = int(data["now"]) + 1
+                        data["msg"] = next_msg
+                        data["now"] = int(data["now"]) + 1
+                        with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
+                            data = json.dump(data,filt)
+                        if up_cl == 0:
+                            await message.channel.send(f"{message.author.mention}恭喜你升級到`{up}`等")
+                        else:
+                            channel = client.get_channel(int(up_cl))
+                            await channel.send(f"{message.author.mention} 恭喜你升級到`{up}`等")
+                    else:
+                        next_msg = int(data["msg"]) + 1
+                        data["msg"] = next_msg
+                        with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
+                            data = json.dump(data,filt)
+                else:
                     with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
+                        data = {"msg":"1","now":"0"}
                         data = json.dump(data,filt)
-            else:
-                with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
-                    data = {"msg":"1","now":"0"}
-                    data = json.dump(data,filt)
             
 
 client.run(TOKEN)
