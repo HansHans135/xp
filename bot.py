@@ -190,7 +190,7 @@ async def on_message(message):
                     if int(IF_msg) > int(data["now"]):
                         up = int(data["now"]) + 1
                         data["msg"] = next_msg
-                        data["now"] = int(data["now"]) + 1
+                        data["now"] = int(IF_msg)
                         with open (f"data/{message.guild.id}/{message.author.id}.json",mode="w",encoding="utf-8") as filt:
                             data = json.dump(data,filt)
                         if up_cl == 0:
